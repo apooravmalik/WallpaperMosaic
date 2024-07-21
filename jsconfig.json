@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      },
+      "jsx": "react-jsx",
+      "checkJs": true,
+      "moduleResolution": "node",
+      "target": "ES2020",
+      "module": "ESNext",
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],
+      "allowSyntheticDefaultImports": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+  }

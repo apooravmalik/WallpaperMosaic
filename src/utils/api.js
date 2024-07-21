@@ -1,4 +1,5 @@
 import axios from 'axios';
+import process from 'process';
 
 const baseURL = process.env.API_URL;
 const apiEndpoint = `${baseURL}/api`;

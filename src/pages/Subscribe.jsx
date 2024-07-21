@@ -45,48 +45,18 @@ const Subscribe = () => {
   };
 
   return (
-    <div className="h-screen w-full flex">
-      <div className="w-1/2 bg-gradient-to-br from-gray-800 via-gray-900 to-black p-6 flex items-center justify-center">
-        <div className="grid grid-cols-2 gap-6 w-full max-w-xl">
-          {images.map((src, index) => (
-            <div
-              key={index}
-              className={`relative transition-all duration-500 ease-in-out transform 
-                ${hoveredIndex === index
-                  ? 'scale-120 z-20 rotate-0'
-                  : hoveredIndex !== null
-                  ? `scale-90 ${getRotation(index)} opacity-75`
-                  : 'scale-95 hover:scale-105'
-                }`}
-              style={{
-                transitionDelay: hoveredIndex !== null ? `${index * 50}ms` : '0ms',
-              }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <img
-                src={src}
-                alt={`Image ${index + 1}`}
-                className="w-full h-full object-cover rounded-lg shadow-lg"
-              />
-              <div className={`absolute inset-0 bg-black bg-opacity-0 transition-opacity duration-300 
-                ${hoveredIndex === index ? 'bg-opacity-10' : 'group-hover:bg-opacity-5'}`}
-              ></div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="w-1/2 bg-gradient-to-br from-gray-800 via-gray-900 to-black p-8 flex flex-col justify-center items-center relative">
-        <h2 className="text-4xl font-bold mb-6 text-center text-white">
+    <div className="min-h-screen w-full flex flex-col">
+      <div className="w-full bg-gradient-to-br from-gray-800 via-gray-900 to-black p-4 md:p-8 flex flex-col justify-center items-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-center text-white">
           Subscribe to Our Wallpaper Newsletter
         </h2>
-        <p className="text-gray-300 mb-8 text-center text-base">
+        <p className="text-gray-300 mb-6 md:mb-8 text-center text-sm md:text-base max-w-2xl">
           Join our community of wallpaper enthusiasts! Subscribe to receive
           bi-monthly emails featuring stunning wallpapers designed by
           talented creators. Discover new artwork and elevate your device
           look with every issue.
         </p>
-        <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
+        <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4 mb-6">
           <input
             type="email"
             value={email}
@@ -111,17 +81,53 @@ const Subscribe = () => {
             </button>
           </div>
         </form>
-        <div className="mt-4 text-gray-400 text-sm">
+        <div className="text-gray-400 text-sm mb-6">
           <Link to="/unsubscribe" className="hover:text-white">
             Unsubscribe
           </Link>
         </div>
-        <div className="absolute bottom-4 flex items-center text-gray-400 text-sm">
-          <FaUserCircle className="w-5 h-5 mr-1" />
-          <a href="https://apoorav-malik.netlify.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white mr-3">
+      </div>
+      
+      <div className="w-full bg-gradient-to-br from-gray-800 via-gray-900 to-black p-4 md:p-6 flex items-center justify-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl">
+          {images.map((src, index) => (
+            <div
+              key={index}
+              className={`relative transition-all duration-500 ease-in-out transform 
+                ${hoveredIndex === index
+                  ? 'scale-110 z-20 rotate-0'
+                  : hoveredIndex !== null
+                  ? `scale-95 ${getRotation(index)} opacity-75`
+                  : 'scale-100 hover:scale-105'
+                }`}
+              style={{
+                transitionDelay: hoveredIndex !== null ? `${index * 50}ms` : '0ms',
+              }}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <img
+                src={src}
+                alt={`Image ${index + 1}`}
+                className="w-full h-48 object-cover rounded-lg shadow-lg"
+              />
+              <div className={`absolute inset-0 bg-black bg-opacity-0 transition-opacity duration-300 
+                ${hoveredIndex === index ? 'bg-opacity-10' : 'group-hover:bg-opacity-5'}`}
+              ></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div className="w-full bg-gradient-to-br from-gray-800 via-gray-900 to-black p-4 flex flex-col md:flex-row justify-center items-center text-gray-400 text-xs md:text-sm">
+        <div className="flex items-center mb-2 md:mb-0 md:mr-6">
+          <FaUserCircle className="w-4 h-4 mr-1" />
+          <a href="https://apoorav-malik.netlify.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white">
             Made by Apoorav
           </a>
-          <FaInstagram className="w-5 h-5 mr-1" />
+        </div>
+        <div className="flex items-center">
+          <FaInstagram className="w-4 h-4 mr-1" />
           <a href="https://www.instagram.com/harman.malik823/" target="_blank" rel="noopener noreferrer" className="hover:text-white">
             Designed by Harman
           </a>

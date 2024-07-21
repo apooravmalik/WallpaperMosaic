@@ -2,8 +2,8 @@ import { useState } from "react";
 import { subscribeEmail } from "../utils/api";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import { FaInstagram, FaUserCircle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaInstagram, FaUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Subscribe = () => {
   const [email, setEmail] = useState("");
@@ -40,7 +40,7 @@ const Subscribe = () => {
   };
 
   const getRotation = (index) => {
-    const rotations = ['rotate-1', '-rotate-1', '-rotate-1', 'rotate-1'];
+    const rotations = ["rotate-1", "-rotate-1", "-rotate-1", "rotate-1"];
     return rotations[index];
   };
 
@@ -52,14 +52,16 @@ const Subscribe = () => {
             <div
               key={index}
               className={`relative transition-all duration-500 ease-in-out transform 
-                ${hoveredIndex === index
-                  ? 'scale-110 z-20 rotate-0'
-                  : hoveredIndex !== null
-                  ? `scale-95 ${getRotation(index)} opacity-75`
-                  : 'scale-100 hover:scale-105'
+                ${
+                  hoveredIndex === index
+                    ? "scale-110 z-20 rotate-0"
+                    : hoveredIndex !== null
+                    ? `scale-95 ${getRotation(index)} opacity-75`
+                    : "scale-100 hover:scale-105"
                 }`}
               style={{
-                transitionDelay: hoveredIndex !== null ? `${index * 50}ms` : '0ms',
+                transitionDelay:
+                  hoveredIndex !== null ? `${index * 50}ms` : "0ms",
               }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
@@ -69,8 +71,13 @@ const Subscribe = () => {
                 alt={`Image ${index + 1}`}
                 className="w-full h-48 md:h-full object-cover rounded-lg shadow-lg"
               />
-              <div className={`absolute inset-0 bg-black bg-opacity-0 transition-opacity duration-300 
-                ${hoveredIndex === index ? 'bg-opacity-10' : 'group-hover:bg-opacity-5'}`}
+              <div
+                className={`absolute inset-0 bg-black bg-opacity-0 transition-opacity duration-300 
+                ${
+                  hoveredIndex === index
+                    ? "bg-opacity-10"
+                    : "group-hover:bg-opacity-5"
+                }`}
               ></div>
             </div>
           ))}
@@ -78,13 +85,14 @@ const Subscribe = () => {
       </div>
       <div className="w-full md:w-1/2 order-1 md:order-2 bg-gradient-to-br from-gray-800 via-gray-900 to-black p-4 md:p-8 flex flex-col justify-center items-center relative">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-center text-white">
-          Subscribe to Our Wallpaper Newsletter
+          Subscribe to Our <span className="animated-gradient">Wallpaper</span>{" "}
+          Newsletter
         </h2>
         <p className="text-gray-300 mb-6 md:mb-8 text-center text-sm md:text-base">
           Join our community of wallpaper enthusiasts! Subscribe to receive
-          bi-monthly emails featuring stunning wallpapers designed by
-          talented creators. Discover new artwork and elevate your device
-          look with every issue.
+          bi-monthly emails featuring stunning wallpapers designed by talented
+          creators. Discover new artwork and elevate your device look with every
+          issue.
         </p>
         <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
           <input
@@ -119,13 +127,23 @@ const Subscribe = () => {
         <div className="mt-4 md:absolute md:bottom-4 flex flex-col md:flex-row items-center text-gray-400 text-xs md:text-sm">
           <div className="flex items-center mb-2 md:mb-0 md:mr-3">
             <FaUserCircle className="w-4 h-4 mr-1" />
-            <a href="https://apoorav-malik.netlify.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+            <a
+              href="https://apoorav-malik.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+            >
               Made by Apoorav
             </a>
           </div>
           <div className="flex items-center">
             <FaInstagram className="w-4 h-4 mr-1" />
-            <a href="https://www.instagram.com/harman.malik823/" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+            <a
+              href="https://www.instagram.com/harman.malik823/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+            >
               Designed by Harman
             </a>
           </div>

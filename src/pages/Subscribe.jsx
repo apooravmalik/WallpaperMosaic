@@ -26,6 +26,7 @@ const Subscribe = () => {
     e.preventDefault();
     setError("");
     try {
+      
       await validationSchema.validate({ email }, { abortEarly: false });
       await subscribeEmail(email);
       toast.success("Subscribed successfully!");

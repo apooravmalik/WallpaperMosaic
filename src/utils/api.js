@@ -22,7 +22,11 @@ api.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-export const subscribeEmail = (email) => api.post('/subscription/subscribe', { email });
+export const subscribeEmail = (email) => {
+  console.log('Subscribing email:', email);
+  console.log('API Endpoint:', `${apiEndpoint}/subscription/subscribe`);
+  return api.post('/subscription/subscribe', { email });
+};
 export const unsubscribeEmail = (email) => api.post('/subscription/unsubscribe', { email });
 export const login = (email, password) => api.post('/auth/login', { email, password });
 export const logout = () => api.post('/auth/logout');

@@ -24,18 +24,19 @@ const Subscribe = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     try {
-      
       await validationSchema.validate({ email }, { abortEarly: false });
+      console.log('Attempting to subscribe:', email);
       await subscribeEmail(email);
-      toast.success("Subscribed successfully!");
-      setEmail("");
+      toast.success('Subscribed successfully!');
+      setEmail('');
     } catch (err) {
+      console.error('Submission error:', err);
       if (err instanceof Yup.ValidationError) {
         setError(err.errors[0]);
       } else {
-        toast.error("Subscription failed. Please try again.");
+        toast.error('Subscription failed. Please try again.');
       }
     }
   };

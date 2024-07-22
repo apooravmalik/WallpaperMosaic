@@ -1,8 +1,14 @@
+// @ts-nocheck
 import axios from 'axios';
-import process from 'process';
 
-const baseURL = process.env.API_URL;
+// For Vite projects
+const baseURL = import.meta.env.VITE_API_URL || 'https://wallpapermosaic.onrender.com';
+
+
+console.log('Base URL:', baseURL);  // For debugging
+
 const apiEndpoint = `${baseURL}/api`;
+console.log('API Endpoint:', apiEndpoint);  // For debugging
 
 const api = axios.create({
   baseURL: apiEndpoint,
@@ -24,8 +30,13 @@ api.interceptors.request.use((config) => {
 
 export const subscribeEmail = (email) => {
   console.log('Subscribing email:', email);
-  console.log('API Endpoint:', `${apiEndpoint}/subscription/subscribe`);
-  return api.post('/subscription/subscribe', { email });
+  console.log('Full subscribe URL:', `${apiEndpoint}/subscription/subscribe`);
+  
+  return api.post('/subscription/subscribe', { email })
+    .catch(error => {
+      console.error('Subscription error:', error.response || error);
+      throw error;
+    });
 };
 export const unsubscribeEmail = (email) => api.post('/subscription/unsubscribe', { email });
 export const login = (email, password) => api.post('/auth/login', { email, password });

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Navigate } from 'react-router-dom';
 import Subscribe from './pages/Subscribe';
 import Unsubscribe from './pages/Unsubscribe';
 import AdminLogin from './pages/AdminLogin';
@@ -24,6 +24,7 @@ function App() {
               </ProtectedRoute>
             } 
           />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <ToastContainer />
       </div>

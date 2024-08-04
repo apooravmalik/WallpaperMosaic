@@ -28,16 +28,23 @@ api.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-export const subscribeEmail = (email) => {
-  console.log('Subscribing email:', email);
-  console.log('Full subscribe URL:', `${apiEndpoint}/subscription/subscribe`);
-  
-  return api.post('/subscription/subscribe', { email })
-    .catch(error => {
-      console.error('Subscription error:', error.response || error);
-      throw error;
-    });
+export const subscribeEmail = async (email) => {
+  try {
+    const response = await api.post('/subscription/subscribe', { email });
+    return response.data;
+  } catch (error) {
+    console.error('API error:', error.response);
+    if (error.response) {
+      if (error.response.status === 409) {
+        throw new Error('Email already subscribed');
+      } else if (error.response.data && error.response.data.error) {
+        throw new Error(error.response.data.error);
+      }
+    }
+    throw new Error('An unknown error occurred');
+  }
 };
+
 export const unsubscribeEmail = (email) => api.post('/subscription/unsubscribe', { email });
 export const login = (email, password) => api.post('/auth/login', { email, password });
 export const logout = () => api.post('/auth/logout');

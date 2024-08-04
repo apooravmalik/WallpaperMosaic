@@ -35,8 +35,10 @@ const Subscribe = () => {
       console.error('Submission error:', err);
       if (err instanceof Yup.ValidationError) {
         setError(err.errors[0]);
+      } else if (err.message === 'Email already subscribed') {
+        toast.info('Email already subscribed!');
       } else {
-        toast.error('Subscription failed. Please try again.');
+        toast.error(err.message || 'Subscription failed. Please try again.');
       }
     }
   };

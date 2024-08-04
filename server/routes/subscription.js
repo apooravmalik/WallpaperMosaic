@@ -7,17 +7,29 @@ const router = express.Router();
 router.post('/subscribe', async (req, res) => {
   const { email } = req.body;
 
-  const { error } = await supabase
-    .from('subscriptions')
-    .insert({ email });
-
-  if (error) {
-    return res.status(400).json({ error: error.message });
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
   }
 
-  res.status(200).json({ message: 'Subscription successful! Please check your email.' });
-});
+  try {
+    // Insert the new subscription
+    const { error: insertError } = await supabase
+      .from('subscriptions')
+      .insert({ email });
 
+    if (insertError) {
+      if (insertError.details.includes('duplicate key')) {
+        return res.status(409).json({ message: 'Email already subscribed' });
+      }
+      return res.status(400).json({ error: insertError.message });
+    }
+
+    res.status(200).json({ message: 'Subscription successful! Please check your email.' });
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    res.status(500).json({ error: 'An unexpected error occurred.' });
+  }
+});
 // Unsubscribe endpoint
 router.post('/unsubscribe', async (req, res) => {
   const { email } = req.body;

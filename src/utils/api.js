@@ -8,7 +8,7 @@ const baseURL = import.meta.env.VITE_API_URL || 'https://wallpapermosaic.onrende
 console.log('Base URL:', baseURL);  // For debugging
 
 const apiEndpoint = `${baseURL}/api`;
-console.log('API Endpoint:', apiEndpoint);  // For debugging
+// console.log('API Endpoint:', apiEndpoint);  // For debugging
 
 const api = axios.create({
   baseURL: apiEndpoint,

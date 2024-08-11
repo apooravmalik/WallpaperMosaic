@@ -13,7 +13,7 @@ emailjs.init({
   privateKey: config.emailJsPrivateKey
 });
 
-router.post('/send-emails', async (req, res) => {
+router.post('/email/send-emails', async (req, res) => {
   const { sportsUrl, carsUrl, movieUrl } = req.body;
 
 

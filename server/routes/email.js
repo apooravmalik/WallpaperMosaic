@@ -41,16 +41,8 @@ const sendEmailWithRetry = async (email, emailHtmlContent, retries = 3, initialD
 
 router.post('/send-emails', async (req, res) => {
   const { sportsUrl, carsUrl, movieUrl } = req.body;
-
-
-  console.log({sportsUrl, carsUrl, movieUrl});
-
-  // Log all environment variables
-  console.log('Environment Variables:');
-  console.log('EMAILJS_SERVICE_ID:', config.emailJsServiceId);
-  console.log('EMAILJS_TEMPLATE_ID:', config.emailJsTemplateId);
-  console.log('EMAILJS_PUBLIC_KEY:', config.emailJsPublicKey);
-  console.log('EMAILJS_PRIVATE_KEY:', config.emailJsPrivateKey);
+  const batchSize = 10; // Adjust batch size based on your rate limits
+  const batchDelay = 10000; // Delay in milliseconds between batches
 
   try {
     const { data: subscriptions, error } = await supabase
@@ -65,17 +57,21 @@ router.post('/send-emails', async (req, res) => {
     const emailHtmlContent = renderEmailTemplate(movieUrl, carsUrl, sportsUrl);
     
     const results = [];
-    for (const email of emails) {
-      const sendResult = await sendEmailWithRetry(email, emailHtmlContent);
-      results.push({ email, ...sendResult });
-      // Add a delay between each email to avoid hitting rate limits
-      await new Promise(resolve => setTimeout(resolve, 500));
+    for (let i = 0; i < emails.length; i += batchSize) {
+      const emailBatch = emails.slice(i, i + batchSize);
+      
+      const batchResults = await Promise.all(emailBatch.map(email => 
+        sendEmailWithRetry(email, emailHtmlContent)
+      ));
+      
+      results.push(...batchResults);
+      
+      // Add a delay between batches to avoid hitting rate limits
+      if (i + batchSize < emails.length) {
+        console.log(`Waiting for ${batchDelay / 1000} seconds before sending the next batch...`);
+        await new Promise(resolve => setTimeout(resolve, batchDelay));
+      }
     }
-    
-    // Log the response from EmailJS
-    results.forEach((result, index) => {
-      console.log(`Email ${index + 1} response:`, result);
-    });
     
     const successCount = results.filter(r => r.status === 'success').length;
     res.status(200).json({ 
@@ -87,5 +83,6 @@ router.post('/send-emails', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 export default router;
